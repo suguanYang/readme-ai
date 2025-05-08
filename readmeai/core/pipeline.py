@@ -56,31 +56,26 @@ async def readme_generator(config: ConfigLoader, output_file: str) -> None:
             responses = await llm.batch_request()
             (
                 file_summaries,
-                features,
-                overview,
-                tagline,
             ) = responses
             summaries = [
-                (path, markdown_to_html.convert(response_cleaner.process_text(summary)))
+                (path, markdown_to_html.convert(summary))
                 for path, summary in file_summaries
             ]
-            cleand_tagline = response_cleaner.extract_text_between_tags(
-                tagline,
-                "<tagline>",
-                "</tagline>",
-            )
-            config.config.md.tagline = response_cleaner.remove_quotes(cleand_tagline)
-            cleaned_intro = response_cleaner.extract_text_between_tags(
-                overview,
-                "<overview>",
-                "</overview>",
-            )
-            config.config.md.overview = config.config.md.overview.format(cleaned_intro)
-            config.config.md.features = config.config.md.features.format(
-                response_cleaner.format_markdown_table(features),
-            )
-        if should_generate_image(config):
-            await generate_image(config)
+            # cleand_tagline = response_cleaner.extract_text_between_tags(
+            #     tagline,
+            #     "<tagline>",
+            #     "</tagline>",
+            # )
+            config.config.md.tagline = ""
+            # cleaned_intro = response_cleaner.extract_text_between_tags(
+            #     overview,
+            #     "<overview>",
+            #     "</overview>",
+            # )
+            config.config.md.overview = ""
+            config.config.md.features = ""
+        # if should_generate_image(config):
+        #     # await generate_image(config)
         if config.config.md.logo in [None, "", DefaultLogos, CustomLogos]:
             config.config.md.logo = DefaultLogos.PURPLE.value
 

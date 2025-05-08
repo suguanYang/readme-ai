@@ -1,7 +1,7 @@
 # LLM prompts for various text generation tasks.
 
 [prompts]
-features_table = """Hello! Analyze the codebase for the project "{0}" and generate a Markdown table summarizing its key technical features.
+features_table = """Hello! Analyze the codebase for the project "{0}" and generate a Markdown table summarizing its key technical features.请使用中文编写该文档
 
 === CONTEXT ===
 PROJECT NAME: {0}
@@ -17,16 +17,8 @@ SOURCE_CODE: {7}
 
 |      | Component       | Details                              |
 | :--- | :-------------- | :----------------------------------- |
-| ⚙️  | **Architecture**  | <ul><li>N</li><li>N + 1</li>...</ul> |
-| 🔩 | **Code Quality**  | <ul><li>N</li><li>N + 1</li>...</ul> |
-| 📄 | **Documentation** | <ul><li>N</li><li>N + 1</li>...</ul> |
-| 🔌 | **Integrations**  | <ul><li>N</li><li>N + 1</li>...</ul> |
-| 🧩 | **Modularity**    | <ul><li>N</li><li>N + 1</li>...</ul> |
-| 🧪 | **Testing**       | <ul><li>N</li><li>N + 1</li>...</ul> |
-| ⚡️  | **Performance**   | <ul><li>N</li><li>N + 1</li>...</ul> |
-| 🛡️ | **Security**      | <ul><li>N</li><li>N + 1</li>...</ul> |
-| 📦 | **Dependencies**  | <ul><li>N</li><li>N + 1</li>...</ul> |
-| 🚀 | **Scalability**   | <ul><li>N</li><li>N + 1</li>...</ul> |
+| 📄 | **Introduction** | <ul><li>N</li><li>N + 1</li>...</ul> |
+| 📄 | **APIs** | <ul><li>N</li><li>N + 1</li>...</ul> |
 
 === INSTRUCTIONS ===
 1. **HTML:** Write the details using unordered HTML list elements.
@@ -35,30 +27,29 @@ SOURCE_CODE: {7}
 5. **Readability:** Ensure the table is well-structured, easy to read. Do not use ful sentences, only quick digestible points.
 """
 
-_file_summary = """
-You are a highly skilled Staff Software Engineering leader with extensive knowledge across various tech stacks. Your task is to write a concise and informative summary for a specific file within an open-source project's codebase.
-
+file_summary = """
+You are a highly skilled Staff Software Engineering leader with extensive knowledge across various tech stacks. Your task is to write a concise and informative exported function, class, and variable list for a specific file within an open-source project's codebase.
+请使用中文编写该文档
 First, review the overall project structure:
-
-<project_structure>
-{{project_structure}}
-</project_structure>
-
+------------------------
+PROJECT STRUCTURE: 
+{0}
+------------------------
 Now, focus on the specific file to be summarized:
-
-<file_path>
-{{file_path}}
-</file_path>
+------------------------
+FILE PATH: 
+{1}
+------------------------
 
 Here's the content of the file:
+------------------------
+FILE CONTENT: 
+{2}
+------------------------
 
-<file_content>
-{{file_content}}
-</file_content>
+Your goal is to provide a concise and informative exported function, class, and variable list for this file.
 
-Your goal is to provide a succinct summary that highlights the main purpose and use of this file in relation to the entire codebase architecture. Focus on what the code achieves, avoiding technical implementation details.
-
-Before writing the final summary, please analyze the file and its context by performing the following steps inside <file_analysis> tags:
+Before writing the final summary, please analyze the file and its context by performing the following steps:
 
 1. Identify the primary function or purpose of the file.
 2. Determine how this file relates to or interacts with other parts of the codebase.
@@ -70,22 +61,36 @@ Before writing the final summary, please analyze the file and its context by per
 8. Highlight any unique or innovative approaches used in the implementation.
 
 Now, based on your analysis, write a summary of the file that meets the following criteria:
-1. Length: 50-70 words
-2. Start with a verb or noun (avoid phrases like "This file", "The file", "This code", etc.)
-3. Focus on the file's main purpose and its role in the codebase
-4. Avoid technical implementation details
-5. Use clear and concise language
+1. List every exported function, class, and variable in the file.
+2. Focus on explaining what they do, its input arguments (name, type, description, default value if any), the output (type, description), and any external dependencies or global state it modifies.
+3. Start with a verb or noun (avoid phrases like "This file", "The file", "This code", etc.)
+4. Focus on the file's main purpose and its role in the codebase
+5. Avoid technical implementation details
+6. Use clear and concise language
+7. Ignore the typescript files that just re-export the functions from other files.
+8. The listed contents should follow format like JSdoc
 
 Present your final summary within <summary> tags.
 
-Example output structure (using generic content):
+Example output structure (using generic content, and highlight the Type of the variable):
 
 <summary>
-Implements core authentication functionality for the application. Manages user login, logout, and session handling processes. Integrates with the database module for user verification and token storage. Provides essential security features, including password hashing and protection against common authentication vulnerabilities. Serves as a critical component in maintaining application security and user management.
+/**
+ * @description This is a React Components that used to load a specific page from an application, use it cautiously since it can cause performance issues if not used properly
+ *              It first checks if the page is already loaded in the cache, if not, it will load the remoteEntry file from OSS, and then load the page from the remoteEntry.
+ * @param String appName - The name of the application
+ * @param String pageName - The name of the page
+ * @returns React.ReactNode - The React node
+ */
+
+
+function RemoteLoader(props: RemoteLoaderProps)
+
+
 </summary>
 """
 
-file_summary = """Deliver a succinct summary that highlights the main purpose and \
+_file_summary = """Deliver a succinct summary that highlights the main purpose and \
 use of the code file provided in regards to the entire codebase architecture. Focus \
 on what the code achieves, steering clear of technical implementation details. \
 While generating the summary, reference additional data about the project below: \n
@@ -112,7 +117,7 @@ logo = """
 Create a fun and vibrant app icon logo for a GitHub repository.
 The logo should be in the style of an Apple app icon - square with rounded corners.
 The icon should feature a singular, memorable character or object that represents the essence of the project, without any external background.
-
+请使用中文编写该文档
 === CONTEXT ===
 PROJECT NAME: {project_name}
 PROJECT OVERVIEW: {project_overview}
@@ -132,7 +137,7 @@ Please describe the icon design in detail, focusing on the central character, co
 
 _overview = """
 You are tasked with analyzing a codebase and providing a concise overview of the software project. Your goal is to create a brief paragraph that captures the project's core use-case, value proposition, and target audience without delving into technical details.
-
+请使用中文编写该文档
 You will be provided with two pieces of information:
 1. The project name: <project_name>{0}</project_name>
 2. A summary of the project's files: <file_summaries>{1}</file_summaries>
@@ -206,7 +211,7 @@ Before providing your final response, work inside <brainstorming> tags to plan y
 
 _tagline = """
 You are a creative marketing specialist tasked with creating a memorable tagline for a project. Your goal is to craft a concise, impactful tagline that captures the essence of the project while adhering to specific requirements.
-
+请使用中文编写该文档
 First, review the following project information:
 
 <project_info>
@@ -241,7 +246,7 @@ Please proceed with creating the tagline for this project.
 
 tagline = """
 Create a memorable tagline for {0} following the ProjectTagline schema.
-
+请使用中文编写该文档
 CONTEXT:
 PROJECT_NAME: {0}
 PROJECT_TYPE: {1}

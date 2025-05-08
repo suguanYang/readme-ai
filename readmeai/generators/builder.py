@@ -194,40 +194,40 @@ class MarkdownBuilder:
         """Assembles each section of the README document in order."""
         sections = [
             # -- HEADER -------------------------------------
-            self.md.top_anchor_markup,
-            self._build_header(),
+            # self.md.top_anchor_markup,
+            # self._build_header(),
             # -- NAVIGATION ---------------------------------
-            f"## {self.theme_manager.apply_theme_to_section('Table of Contents')}\n\n{self.table_of_contents}",
-            self.thematic_break,
+            # f"## {self.theme_manager.apply_theme_to_section('Table of Contents')}\n\n{self.table_of_contents}",
+            # self.thematic_break,
             # -- INTRODUCTION --------------------------------
-            f"## {self.theme_manager.apply_theme_to_section('Overview')}\n\n{self.md.overview}\n",
-            self.thematic_break,
+            # f"## {self.theme_manager.apply_theme_to_section('Overview')}\n\n{self.md.overview}\n",
+            # self.thematic_break,
             # -- FEATURES -----------------------------------
-            f"## {self.theme_manager.apply_theme_to_section('Features')}\n\n{self.md.features}\n",
-            self.thematic_break,
+            # f"## {self.theme_manager.apply_theme_to_section('Features')}\n\n{self.md.features}\n",
+            # self.thematic_break,
             # -- PROJECT STRUCTURE -------------------------
             f"## {self.theme_manager.apply_theme_to_section('Project Structure')}\n\n{self.tree}\n",
             f"### {self.theme_manager.apply_theme_to_section('Project Structure', 'Project Index')}\n\n{self.file_summaries}\n",
-            self.thematic_break,
+            # self.thematic_break,
             # -- QUICKSTART GUIDE ----------------------------
-            f"## {self.theme_manager.apply_theme_to_section('Getting Started')}\n\n{self.quickstart_guide}",
-            self.thematic_break,
+            # f"## {self.theme_manager.apply_theme_to_section('Getting Started')}\n\n{self.quickstart_guide}",
+            # self.thematic_break,
             # -- ROADMAP ------------------------------------
-            f"## {self.theme_manager.apply_theme_to_section('Roadmap')}\n\n{self.md.roadmap}",
-            self.thematic_break,
+            # f"## {self.theme_manager.apply_theme_to_section('Roadmap')}\n\n{self.md.roadmap}",
+            # self.thematic_break,
             # -- CONTRIBUTING --------------------------------
-            f"## {self.theme_manager.apply_theme_to_section('Contributing')}\n\n{self.contributing_guide}",
-            self.thematic_break,
+            # f"## {self.theme_manager.apply_theme_to_section('Contributing')}\n\n{self.contributing_guide}",
+            # self.thematic_break,
             # -- LICENSE ------------------------------------
-            f"## {self.theme_manager.apply_theme_to_section('License')}\n\n{self.license}",
-            self.thematic_break,
+            # f"## {self.theme_manager.apply_theme_to_section('License')}\n\n{self.license}",
+            # self.thematic_break,
             # -- ACKNOWLEDGMENTS -----------------------------
-            f"## {self.theme_manager.apply_theme_to_section('Acknowledgment')}\n\n{self.acknowledgment}",
+            # f"## {self.theme_manager.apply_theme_to_section('Acknowledgment')}\n\n{self.acknowledgment}",
             # -- FOOTER -------------------------------------
-            self.md.return_to_top_div,
-            "\n",
-            self.md.return_to_top_reflink,
-            "\n",
-            self.thematic_break,
+            # self.md.return_to_top_div,
+            # "\n",
+            # self.md.return_to_top_reflink,
+            # "\n",
+            # self.thematic_break,
         ]
         return "\n".join(sections)

@@ -109,14 +109,14 @@ class BaseModelHandler(ABC):
             self.documents,
         )
         summaries_responses = await self._batch_prompts(summaries_prompts)
-        additional_prompts = set_additional_contexts(
-            self.config,
-            self.repo_context,
-            summaries_responses,
-        )
-        additional_responses = await self._batch_prompts(additional_prompts)
+        # additional_prompts = set_additional_contexts(
+        #     self.config,
+        #     self.repo_context,
+        #     summaries_responses,
+        # ) 
+        # additional_responses = await self._batch_prompts(additional_prompts)
 
-        return summaries_responses + additional_responses
+        return summaries_responses
 
     async def _batch_prompts(
         self,
@@ -184,7 +184,7 @@ class BaseModelHandler(ABC):
             file_summaries = []
             for file_path, file_content in file_context["repo_files"]:
                 prompt = self.prompts["prompts"]["file_summary"].format(
-                    self.config.md.directory_structure,
+                    "\n".join([file.path for file in self.repo_context.files]),
                     file_path,
                     file_content,
                 )

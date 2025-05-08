@@ -208,11 +208,11 @@ def _generate_table_rows(
     for file, summary in files:
         file_name = Path(file).name
         file_link = _get_file_hyperlink(file, repo_path, is_local_repo, repo_url)
-        formatted_summary = format_summary(summary)
+        # formatted_summary = format_summary(summary)
         content.append(
             f"{indent}<tr style='border-bottom: 1px solid #eee;'>"
             f"\n{indent}\t<td style='padding: 8px;'><b><a href='{file_link}'>{file_name}</a></b></td>"
-            f"\n{indent}\t<td style='padding: 8px;'>{formatted_summary}</td>"
+            f"\n{indent}\t<td style='padding: 8px;'>{summary}</td>"
             f"\n{indent}</tr>"
         )
     return content

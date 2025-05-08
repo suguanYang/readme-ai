@@ -214,6 +214,7 @@ class ModelSettings(BaseModel):
         "across most tech stacks. You'll use your expertise to write robust "
         "README markdown files for open-source projects. You're a master of "
         "the craft, and you're here to help others succeed."
+        "请使用中文编写该文档"
     )
     supported_models: Dict[str, List[str]] = Field(
         default_factory=lambda: {
